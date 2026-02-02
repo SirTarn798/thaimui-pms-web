@@ -3,7 +3,6 @@ services:
   app:
     platform: linux/amd64
     container_name: jos-tms-iso
-    image: registry.gitlab.com/armuro.rey.dev/container-registry/jos-tms-web-isolation:${TAG}
     ports:
       - "7001:5173"
     environment:
