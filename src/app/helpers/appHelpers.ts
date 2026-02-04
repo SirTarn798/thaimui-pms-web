@@ -1,5 +1,6 @@
 import Swal from "sweetalert2";
 import EnvConfig from "../environments/envConfig";
+import axios from 'axios';
 
 const env = new EnvConfig();
 const lcRefresh = "refresh-token"
@@ -10,6 +11,7 @@ const lcExpiredDate = "token_expired_date";
 const lcRoleId = "role_id";
 const lcEmpId = "employee_id";
 const lcRoleCode = "role_code";
+const lcRoleName = "role_name";
 const prem_tree_en = "permission_tree_encoded"
 const perm_sig = "permission_signature"
 
@@ -78,6 +80,10 @@ export const saveRoleCodeToLocal = (role_code: string) => {
     localStorage.setItem(lcRoleCode, role_code);
 }
 
+export const saveRoleNameToLocal = (role_name: string) => {
+    localStorage.setItem(lcRoleName, role_name);
+}
+
 export const saveEmpIdToLocal = (employee_id: string) => {
     localStorage.setItem(lcEmpId, employee_id);
 }
@@ -122,6 +128,10 @@ export const getRoleCode = () => {
     return localStorage.getItem(lcRoleCode);
 }
 
+export const getRoleName = () => {
+    return localStorage.getItem(lcRoleName);
+}
+
 export const getEmpId = () => {
     return localStorage.getItem(lcEmpId);
 }
@@ -132,6 +142,30 @@ export const getGroupId = () => {
 
 export const deleteTokenFromLocal = () => {
     localStorage.clear();
+}
+
+
+
+// export const logout_token_api = axios.post({ //------------
+//     baseURL: env.logout_token_api,
+//     headers: {
+//         "Content-Type": "application/json",
+//     },
+// });
+
+export const destroyToken = () => {
+    try {
+    const refreshToken = getTokenRefresh();
+    const token = getTokenFromLocal();
+
+    if (refreshToken && token) {
+    axios.post('http://localhost:5000/api/logout', { //------------
+        refresh_token: refreshToken
+      });
+    }
+  } catch (error) {
+    console.error("Logout Error:", error);
+  }
 }
 
 export const getPermTree = () => {
@@ -174,10 +208,10 @@ export const convertImageToBase64 = async (image: File) => {
 }
 
 export const getStartAndEndOfMonth = () => {
-	const now = new Date();
-	const start = new Date(now.getFullYear(), now.getMonth(), 1);
-	const end = new Date(now.getFullYear(), now.getMonth() + 1, 0);
-	return [start, end] as [Date, Date];
+    const now = new Date();
+    const start = new Date(now.getFullYear(), now.getMonth(), 1);
+    const end = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+    return [start, end] as [Date, Date];
 };
 
 export const getCitizenIdFormat = (input: string) => {

@@ -26,23 +26,23 @@ export const front_api = async (
 	options: ApiOptions = {}
 ) => {
 	try {
-		if (isTokenExpired() && (path != "/login")) {
+		if (isTokenExpired() && path !== "/login") {
 			const refresh_token = getTokenRefresh();
 			if (!refresh_token) {
 				giveAccessDenied();
 				return;
 			}
+
 			const res = await refresh(refresh_token);
-			if(res == false) {
-				console.error("Can't refresh token")
-				return
-			}
-			if (res?.status != 200) {
+			if (!res || res.status !== 200) {
+				console.error("Can't refresh token");
 				giveAccessDenied(true);
-				return
-			} else {
-				const data = await res.json();
-				const result = authTokenDedicated(data.data.access_token, refresh_token);
+				return;
+			}
+
+			const data = await res.json();
+			if (data.success) {
+				const result = authTokenDedicated(data.access_token, data.refresh_token);
 				if (!result) {
 					giveAccessDenied(true);
 					return;
