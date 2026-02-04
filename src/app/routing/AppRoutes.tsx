@@ -30,18 +30,20 @@ const AppRoutes: FC = () => {
     if (token) {
       // await initializeNotifications();
         
-      if (window.location.pathname === "/") {
+        if (window.location.pathname === "/") {
         if (isTokenExpired()) {
           giveAccessDenied();
         } else {
-          
           window.location.href = "/main";
         }
       } else {
-        // checkIfTokenExpired();
+        checkIfTokenExpired();
       }
     } else {
-      giveAccessDenied()
+
+        if (window.location.pathname !== "/login" && window.location.pathname !== "/access-denied") {
+          window.location.href = "/login";
+        }
     }
   })();
 }, [token]);

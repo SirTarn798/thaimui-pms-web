@@ -26,7 +26,7 @@ export const login = async (username: string, password: string) => {
 export const refresh = async (refresh_token: string) => {
     try {
         const env = new EnvConfig()
-        const response = await fetch(`${env.front_api}/refresh`, {
+        const response = await fetch(`${env.front_api}/refresh-token`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

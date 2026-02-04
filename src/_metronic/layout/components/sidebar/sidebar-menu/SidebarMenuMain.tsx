@@ -38,17 +38,17 @@ const SidebarMenuMain = () => {
   const fetchPermissionList = async () => {
     setIsMenuLoading(true);
     try {
-      
+
     } catch (e) {
       console.error(e);
       console.log("fetchPermissionList returns error.");
     } finally {
-      // setIsMenuLoading(false);
+      setIsMenuLoading(false);
     }
   }
 
   useEffect(() => {
-      fetchPermissionList();
+    fetchPermissionList();
   }, [masterData.updatePermission])
 
   // ------------------------ อย่าเพิ่ม PATH ตรงนี้ หรือถ้าเพิ่มเพื่อเทส icon อย่าลืมลบก่อน PUSH ด้วยนะครับบบบบบ ------------------------

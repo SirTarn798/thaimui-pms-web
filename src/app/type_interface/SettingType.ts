@@ -54,7 +54,6 @@ export interface AddModuleModalProps {
 
 export interface Role {
     role_id: number | string;
-    role_code: string;
     role_name: string;
     description: string;
 }
