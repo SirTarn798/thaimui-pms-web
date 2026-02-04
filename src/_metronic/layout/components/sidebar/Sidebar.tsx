@@ -1,21 +1,21 @@
 /* eslint-disable no-prototype-builtins */
 import clsx from 'clsx'
-import {useEffect, useRef, useState} from 'react'
-import {ILayout, useLayout} from '../../core'
-import {SidebarMenu} from './sidebar-menu/SidebarMenu'
-import {SidebarFooter} from './SidebarFooter'
-import {SidebarLogo} from './SidebarLogo'
-import { getRoleCode } from '../../../../app/helpers/appHelpers'
+import { useEffect, useRef, useState } from 'react'
+import { ILayout, useLayout } from '../../core'
+import { SidebarMenu } from './sidebar-menu/SidebarMenu'
+import { SidebarFooter } from './SidebarFooter'
+import { SidebarLogo } from './SidebarLogo'
+import { getRoleName } from '../../../../app/helpers/appHelpers'
 
 const Sidebar = () => {
 
-  const {config} = useLayout()
+  const { config } = useLayout()
   const sidebarRef = useRef<HTMLDivElement>(null)
-  const [ roleCode, setRoleCode ] = useState<string | null>("");
+  const [roleName, setRoleName] = useState<string | null>("");
 
   useEffect(() => {
     updateDOM(config);
-    setRoleCode(getRoleCode());
+    setRoleName(getRoleName());
   }, [config])
 
   if (!config.app?.sidebar?.display) {
@@ -32,10 +32,7 @@ const Sidebar = () => {
         >
           <SidebarLogo sidebarRef={sidebarRef} />
           <SidebarMenu />
-          {
-            !roleCode || roleCode.toLowerCase() !== "tms_admin" ? null :
-            <SidebarFooter />
-          }
+          <SidebarFooter />
         </div>
       )}
     </>
@@ -101,7 +98,7 @@ const updateDOM = (config: ILayout) => {
     )
 
     const appSidebarDefaultDrawerEnabled = config.app?.sidebar?.default?.drawer?.enabled
-    let appSidebarDefaultDrawerAttributes: {[attrName: string]: string} = {}
+    let appSidebarDefaultDrawerAttributes: { [attrName: string]: string } = {}
     if (appSidebarDefaultDrawerEnabled) {
       appSidebarDefaultDrawerAttributes = config.app?.sidebar?.default?.drawer?.attributes as {
         [attrName: string]: string
@@ -109,7 +106,7 @@ const updateDOM = (config: ILayout) => {
     }
 
     const appSidebarDefaultStickyEnabled = config.app?.sidebar?.default?.sticky?.enabled
-    let appSidebarDefaultStickyAttributes: {[attrName: string]: string} = {}
+    let appSidebarDefaultStickyAttributes: { [attrName: string]: string } = {}
     if (appSidebarDefaultStickyEnabled) {
       appSidebarDefaultStickyAttributes = config.app?.sidebar?.default?.sticky?.attributes as {
         [attrName: string]: string
@@ -145,4 +142,4 @@ const updateDOM = (config: ILayout) => {
   }
 }
 
-export {Sidebar}
+export { Sidebar }

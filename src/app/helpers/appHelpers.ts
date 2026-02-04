@@ -10,6 +10,7 @@ const lcExpiredDate = "token_expired_date";
 const lcRoleId = "role_id";
 const lcEmpId = "employee_id";
 const lcRoleCode = "role_code";
+const lcRoleName = "role_name";
 const prem_tree_en = "permission_tree_encoded"
 const perm_sig = "permission_signature"
 
@@ -78,6 +79,10 @@ export const saveRoleCodeToLocal = (role_code: string) => {
     localStorage.setItem(lcRoleCode, role_code);
 }
 
+export const saveRoleNameToLocal = (role_name: string) => {
+    localStorage.setItem(lcRoleName, role_name);
+}
+
 export const saveEmpIdToLocal = (employee_id: string) => {
     localStorage.setItem(lcEmpId, employee_id);
 }
@@ -120,6 +125,10 @@ export const getRoleId = () => {
 
 export const getRoleCode = () => {
     return localStorage.getItem(lcRoleCode);
+}
+
+export const getRoleName = () => {
+    return localStorage.getItem(lcRoleName);
 }
 
 export const getEmpId = () => {
@@ -174,10 +183,10 @@ export const convertImageToBase64 = async (image: File) => {
 }
 
 export const getStartAndEndOfMonth = () => {
-	const now = new Date();
-	const start = new Date(now.getFullYear(), now.getMonth(), 1);
-	const end = new Date(now.getFullYear(), now.getMonth() + 1, 0);
-	return [start, end] as [Date, Date];
+    const now = new Date();
+    const start = new Date(now.getFullYear(), now.getMonth(), 1);
+    const end = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+    return [start, end] as [Date, Date];
 };
 
 export const getCitizenIdFormat = (input: string) => {

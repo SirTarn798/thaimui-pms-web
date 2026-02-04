@@ -117,7 +117,7 @@ const DedicatedLogin: React.FC = () => {
           {/* Left side - Gradient */}
           <div className="col-lg-6 d-none d-lg-flex gradient-side align-items-center justify-content-center">
             <div className="gradient-overlay-text">
-              TMS
+              PMS
             </div>
           </div>
 
@@ -125,7 +125,7 @@ const DedicatedLogin: React.FC = () => {
           <div className="col-lg-6 col-12 form-side">
             <div className="login-form-wrapper">
               <h1 className="brand-text">เข้าสู่ระบบ</h1>
-              <p className="welcome-text">กรอกข้อมูลเพื่อเข้าสู่ระบบ TMS</p>
+              <p className="welcome-text">กรอกข้อมูลเพื่อเข้าสู่ระบบ PMS</p>
 
               <div onSubmit={handleSubmit}>
                 <div className="mb-3">

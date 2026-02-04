@@ -1,15 +1,16 @@
 import { authToken } from "../services/authenticationServices";
-import { 
+import {
     giveAccessDenied, saveUserIdToLocal,
     saveTokenToLocal, saveUsernameToLocal,
     saveRoleIdToLocal, saveEmpIdToLocal, saveRoleCodeToLocal,
     getTokenExpiredDateLocal,
     saveTokenExpiredDateToLocal,
     saveRefreshToken,
-    saveGroupId
+    saveGroupId,
+    saveRoleNameToLocal
 }
-from "./appHelpers";
-import {decode} from "jsonwebtoken"
+    from "./appHelpers";
+import { decode } from "jsonwebtoken"
 
 // export const authenticateToken = async () => {
 //     try {
@@ -44,7 +45,7 @@ import {decode} from "jsonwebtoken"
 export const isTokenExpired = () => {
     const lcExpiredDate = getTokenExpiredDateLocal() as string;
     if (!lcExpiredDate) return true;
-    
+
     const tokenExpiredDate = new Date(lcExpiredDate.replace(" ", "T"));
     const currentDate = new Date();
     return currentDate > tokenExpiredDate;
@@ -64,8 +65,9 @@ export const isTokenAlmostExpired = () => {
 
 
 export const checkIfTokenExpired = () => {
-    if (isTokenExpired()) { 
-        giveAccessDenied() };
+    if (isTokenExpired()) {
+        giveAccessDenied()
+    };
     return;
 }
 
@@ -92,11 +94,11 @@ export const checkIfTokenExpired = () => {
 
 
 export function decodeJWTUnsafe(token: string): any {
-  const decoded = decode(token, { complete: true });
-  return decoded;
+    const decoded = decode(token, { complete: true });
+    return decoded;
 }
 
-export const authTokenDedicated = (token : any, refresh_token : any) => {
+export const authTokenDedicated = (token: any, refresh_token: any) => {
     try {
         const data = decodeJWTUnsafe(token)
         const auth = data.payload
@@ -111,10 +113,11 @@ export const authTokenDedicated = (token : any, refresh_token : any) => {
         saveUsernameToLocal(auth["username"]);
         saveRoleIdToLocal(auth["role_id"]);
         saveRoleCodeToLocal(auth["role_code"])
+        saveRoleNameToLocal(auth["role_name"] || "")
         saveEmpIdToLocal(!auth["employee_id"] ? "" : auth["employee_id"]);
         saveGroupId(auth["group_id"])
         saveTokenExpiredDateToLocal(formatted);
-        return true 
+        return true
     } catch (error) {
         console.error("Authentication failed:", error);
         // giveAccessDenied();
