@@ -3,7 +3,7 @@ services:
   app:
     platform: linux/amd64
     image: registry.gitlab.com/jostechnology/thaimui-pms-web-dev:${TAG}
-    container_name: jos-tms-iso
+    container_name: thaimui-pms-web
     ports:
       - "7002:5173"
     environment:
