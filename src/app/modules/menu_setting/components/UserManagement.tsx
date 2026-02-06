@@ -138,21 +138,23 @@ const UserManagement: React.FC = () => {
             title: 'เปลี่ยนรหัสผ่าน',
             html:
                 `<input id="swal-old-pass" class="swal2-input" type="password" placeholder="รหัสผ่านเดิม">` +
-                `<input id="swal-new-pass" class="swal2-input" type="password" placeholder="รหัสผ่านใหม่">`,
+                `<input id="swal-new-pass" class="swal2-input" type="password" placeholder="รหัสผ่านใหม่">`+
+                `<input id="swal-con-new-pass" class="swal2-input" type="password" placeholder="ยืนยันรหัสผ่านใหม่">`,
             focusConfirm: false,
             showCancelButton: true,
             preConfirm: () => {
                 return [
                     (document.getElementById('swal-old-pass') as HTMLInputElement).value,
-                    (document.getElementById('swal-new-pass') as HTMLInputElement).value
+                    (document.getElementById('swal-new-pass') as HTMLInputElement).value,
+                    (document.getElementById('swal-con-new-pass') as HTMLInputElement).value
                 ]
             }
         });
 
         if (formValues) {
-            const [oldPass, newPass] = formValues;
+            const [oldPass, newPass ,conNewPass] = formValues;
             if (!oldPass || !newPass) return alertMessage("กรุณากรอกข้อมูลให้ครบ");
-
+            if (newPass !== conNewPass) return alertMessage("รหัสผ่านใหม่กับยืนยันรหัสผ่านไม่ตรงกัน");
             setLoading();
             const res = await changePassword({
                 username: username,
